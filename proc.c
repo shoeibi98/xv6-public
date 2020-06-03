@@ -532,3 +532,50 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+
+int 
+getprocess(void){
+int count=0;
+int max;
+struct proc_info *pi;
+struct proc *p;
+
+argint(0,&max);
+argptr(1,(char **)&pi,max*sizeof(struct proc_info));
+
+for(p=ptable.proc ; p< &ptable.proc[NPROC]; p++)
+{
+if(p->state == UNUSED) continue;
+if(p->state == RUNNABLE || p-> state == RUNNING)
+{
+  pi[count].pid = p -> pid;
+  pi[count].memsize = p ->sz;
+count++;
+}
+
+}
+//sort processes by memory size usage
+for(int i=0 ;i<NPROC;i++ )
+{
+  for(int j=i+1;i<NPROC;i++)
+  {
+    if(pi[i].memsize<pi[j].memsize)
+    {
+struct proc_info proctemp=pi[i];
+
+proctemp.pid=pi[i].pid;
+proctemp.memsize=pi[i].memsize;
+///////////////
+pi[i].pid=pi[j].pid;
+pi[i].memsize=pi[j].memsize;
+///////////////
+pi[j].pid=proctemp.pid;
+pi[j].memsize=proctemp.memsize;
+
+    
+    }
+  }
+}
+return count;
+}
