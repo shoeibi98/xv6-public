@@ -41,7 +41,6 @@ sys_getpid(void)
 {
   return myproc()->pid;
 }
-
 int
 sys_sbrk(void)
 {
@@ -88,4 +87,10 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+int 
+sys_getprocrss(void)
+{
+return getprocess();
 }
