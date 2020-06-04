@@ -551,31 +551,39 @@ if(p->state == RUNNABLE || p-> state == RUNNING)
 {
   pi[count].pid = p -> pid;
   pi[count].memsize = p ->sz;
+  //if process is in runnable or running state count increase 1 unit
 count++;
 }
 
 }
 //sort processes by memory size usage
-for(int i=0 ;i<NPROC;i++ )
-{
-  for(int j=i+1;i<NPROC;i++)
-  {
-    if(pi[i].memsize<pi[j].memsize)
-    {
-struct proc_info proctemp=pi[i];
+insertionSort(pi,sizeof(pi)/sizeof(pi[0]));
 
-proctemp.pid=pi[i].pid;
-proctemp.memsize=pi[i].memsize;
-///////////////
-pi[i].pid=pi[j].pid;
-pi[i].memsize=pi[j].memsize;
-///////////////
-pi[j].pid=proctemp.pid;
-pi[j].memsize=proctemp.memsize;
-
-    
-    }
-  }
-}
 return count;
 }
+/* Function to sort an array using insertion sort*/
+void insertionSort(struct proc_info *pi, int n) 
+{ 
+    int i, key, j; 
+    for (i = 1; i < n; i++) { 
+        key = pi[i].memsize; 
+        j = i - 1; 
+  
+        /* Move elements of arr[0..i-1], that are 
+          greater than key, to one position ahead 
+          of their current position */
+        while (j >= 0 && pi[j].memsize) { 
+            pi[j + 1].memsize = pi[j].memsize; 
+            j = j - 1; 
+        } 
+         pi[j + 1].memsize = key; 
+    } 
+    //print array
+    /*
+   for (i = 0; i < n; i++) 
+       { printf("%d ", pi[i].pid); 
+    printf("%d ", pi[i].memsize);
+    }
+    printf("\n"); 
+*/
+} 
