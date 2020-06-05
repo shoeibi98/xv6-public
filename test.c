@@ -2,6 +2,7 @@
 #include "stat.h"
 #include "user.h"
 
+
 int main (void)
 {
     int f=fork();
@@ -17,14 +18,14 @@ malloc(10*sizeof(int));//sizeof(int)=4//10*4=40bytes
 }
 wait();
     }
-    
+
     else
     {
         //child
       fork();
       if(fork!=0){
           malloc(15*sizeof(int));//sizeof(int)=4//15*4=60bytes
-     
+
      wait(); }
       else{
           malloc(5*sizeof(int));//sizeof(int)=4//5*4=20bytes
