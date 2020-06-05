@@ -6,39 +6,51 @@
 int main (void)
 {
     int f=fork();
-    if(f!=0)
-    {  //parent
-        f=fork();
-if(fork!=0)
+if(f<0)//fork==-1;
 {
-malloc(8*sizeof(int));//sizeof(int)=4//8*4=32bytes
+printf(1,"fork failed");
+}   
+ else if(f==0)
+    {  //child
+      
+int *i=malloc(51400*sizeof(char*));//sizeof(char*)=4
+for(int j=0;j<500000000;j++)
+{
+*i=2;
+}
 }
 else{
-malloc(10*sizeof(int));//sizeof(int)=4//10*4=40bytes
+int innerf=fork();
+if(innerf<0)//fork==-1;
+{
+printf(1,"inner fork failed");
+}   
+ else if(f==0)
+    {  //inner child
+      
+int *i=malloc(726*sizeof(double*));//sizeof(double*)=8
+for(int j=0;j<7000000000;j++)
+{
+*i=2;
+}
+}
+else{
+struct proc_info *pi=malloc(100*sizeof(struct proc_info));
+//getprocess();
+for (int i=0;i<10;i++)
+{
+if(pi[i].pid!=0){
+printf(1,"id=");
+printf(1,"%d \n",pi[i].pid);
+printf(1,"memsize=");
+printf(1,"%d \n",pi[i].memsize);
+}
 }
 wait();
     }
 
-    else
-    {
-        //child
-      fork();
-      if(fork!=0){
-          malloc(15*sizeof(int));//sizeof(int)=4//15*4=60bytes
-
-     wait(); }
-      else{
-          malloc(5*sizeof(int));//sizeof(int)=4//5*4=20bytes
-     int max=64;//max byte = 64
-     struct proc_info *pi=malloc(max*sizeof(struct proc_info));
-
-     int n=getprocess(max,pi);
-     for(int i=0;i<n;i++)
-     {
-         printf(pi[i].pid,pi[i].memsize);
-     }
-      }
-    }
-    wait();
-    exit();
+    
+   // wait();
+}
+//exit();
 }
