@@ -53,6 +53,15 @@ trap(struct trapframe *tf)
       ticks++;
       wakeup(&ticks);
       release(&tickslock);
+      if(myproc())//add for count runtime and iotime
+      {
+        if(myproc()->state==RUNNING)
+        myproc()->rtime;
+      else if(myproc()->state==SLEEPING)
+      {
+        myproc()->iotime++;
+      }
+      }
     }
     lapiceoi();
     break;
