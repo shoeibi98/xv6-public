@@ -15,15 +15,15 @@ int main(int argc, char *argv[])
     }
     if(pid==0)//child
     {
-printf(1,"pid %d created child\n",getpid());
+printf(1,"\npid %d created child\n",getpid());
     }
     else{
-        for(int i=0;i<1000;i++)
-        {
-            printf(1,"%d",i);
-        }
+for (int i=0;i<200;i++)
+{printf(1,"%d",i);
+}
         child_pid=waitx(&wtime,&rtime);
-        printf(1,"waittime = %d, runtime = %d with childpid = %d \n",wtime,rtime,child_pid);
+    
+        printf(1,"\n waittime = %d, runtime = %d with childpid = %d \n",wtime,rtime,child_pid);
     }
     exit();
 }

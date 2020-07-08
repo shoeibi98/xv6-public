@@ -327,7 +327,7 @@ int havekids,pid;
 struct proc *curproc=myproc();
 
 acquire(&ptable.lock);
-for(;;)
+while(1==1)
 {
   // scan through table looking for zombie children
 havekids=0;
