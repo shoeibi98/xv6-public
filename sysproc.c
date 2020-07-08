@@ -95,7 +95,7 @@ sys_getprocrss(void)
 return getprocess();
 }
 int
-SYS_waitx(void)
+sys_waitx(void)
 {
 int *wtime;
 int *rtime;
