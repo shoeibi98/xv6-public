@@ -118,7 +118,7 @@ p->etime=0;       // end time
 p->iotime=0;      // i/o time
 p->rtime=0;       // total time
 
-
+p->priority=60;   //initialize priority
   return p;
 }
 
@@ -379,7 +379,7 @@ sleep(curproc,&ptable.lock);// DOC : wait-sleep
 void
 scheduler(void)
 {
-  struct proc *p;
+  struct proc *p, *temp;
   struct cpu *c = mycpu();
   c->proc = 0;
   
@@ -392,6 +392,20 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
+
+struct proc *hp; //high priority
+
+//add priority scheduling
+hp = p;
+for(temp=ptable.proc ; temp < &ptable.proc[NPROC] ; temp++)
+{
+if(temp->state != RUNNABLE)
+continue;
+if(hp -> priority > temp-> priority)
+  hp = temp;
+
+}
+p=hp;
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
@@ -645,3 +659,22 @@ pi[j].memsize=proctemp.memsize;
 */
 return count;
 } 
+ int 
+ set_priority(int pid, int value)
+ {
+   struct proc *p;
+   int oldpriority=-1;
+   acquire(&ptable.lock);
+   for(p = ptable.proc;p<&ptable.proc[NPROC];p++)
+   {
+      if(p->pid==pid)
+      {
+        oldpriority=p->priority;
+        p->priority=value;
+        break;
+      }
+
+   }
+   release(&ptable.lock);
+   return oldpriority;
+ }

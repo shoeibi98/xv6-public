@@ -94,3 +94,30 @@ sys_getprocrss(void)
 {
 return getprocess();
 }
+int
+SYS_waitx(void)
+{
+int *wtime;
+int *rtime;
+
+if(argptr(0,(char**)&wtime,sizeof(int))<0)
+return -1;
+
+if(argptr(0,(char**)&rtime,sizeof(int))<0)
+return -1;
+
+return waitx(wtime,rtime);
+}
+ 
+ int
+ sys_set_priority(void)
+ {
+   int pid,value;
+   if(argint(0,&pid)<0)
+   return -1;
+ 
+   if(argint(0,&value)<0)
+   return -1;
+
+   return set_priority(pid,value);
+   }
